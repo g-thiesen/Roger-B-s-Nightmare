@@ -31,6 +31,7 @@ var current_layer = Layer.LOCAL_LAYER
 var new_scene_path
 
 var controlled_entity
+var player_entity
 
 var local_handler: LocalLayer
 var region_handler: RegionLayer

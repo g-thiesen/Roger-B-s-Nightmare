@@ -108,6 +108,7 @@ func generate_run():
 	player_inst = player_scene.instantiate()
 	player_inst.global_position = TilesInterface.tileCoords_to_trueCoords(TilesInterface.current_location_local + TilesInterface.get_global_tile_coords_of_local(TilesInterface.current_location_region, TilesInterface.current_location_continent))
 	Global.controlled_entity = player_inst
+	Global.player_entity = player_inst
 	print("Generation finished!")
 	
 	character_menu_inst = character_menu_scene.instantiate()

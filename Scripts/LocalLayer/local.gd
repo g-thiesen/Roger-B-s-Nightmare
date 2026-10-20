@@ -29,11 +29,7 @@ func generate(region_coords: Vector2i, continent_coords: Vector2i):
 	var global_tile_coords = TilesInterface.get_global_tile_coords_of_local(region_coords, continent_coords)
 	var tile_type: int = region_matrix[region_coords.y][region_coords.x]
 	var pos: Vector2 = TilesInterface.tileCoords_to_trueCoords(global_tile_coords)
-	var start = Time.get_ticks_usec()
 	background_inst = grassland_scene.instantiate()
-	var end = Time.get_ticks_usec()
-	var worker_time = (end-start)/1000.0
-	print("Worker time: %s" % worker_time)
 	
 	background_inst.position = pos
 	if tile_type <= -1:
