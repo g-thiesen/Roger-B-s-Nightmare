@@ -24,7 +24,7 @@ var cursor_inst
 var loading_inst
 var character_menu_inst
 
-var npcs = {}
+var npcs: Array[NPC] = []
 
 
 # ---------------------------------------------------------------
@@ -44,6 +44,7 @@ func _ready():
 	
 	GameEventController.message_box_triggered.connect(show_message_box)
 	GameEventController.spawn_npc_triggered.connect(generate_npc)
+	GameEventController.remove_npc_signal.connect(remove_npc)
 	
 func _input(event):
 	pass
@@ -132,10 +133,8 @@ func draw_run():
 	local_inst.draw_all_near_locals()
 	#await get_tree().process_frame
 	
-	for npc_pos in npcs:
-		add_child(npcs[npc_pos])
-		npcs[npc_pos].global_position = TilesInterface.tileCoords_to_trueCoords(npc_pos)
-		
+	for npc in npcs:
+		add_child(npc)
 	
 	player_inst.get_node("RemoteTransform2D").remote_path = $Camera2D.get_path()
 	add_child(player_inst)
@@ -220,16 +219,16 @@ func toggle_neural_layer():
 	if Global.get_game_state() == Global.GameState.NEURAL_LAYER:
 		Global.change_game_state_back()
 		$NeuralLayer.visible = false
-		Global.controlled_entity = player_inst
-		player_inst.get_node("RemoteTransform2D").remote_path = $Camera2D.get_path()
-		$NeuralLayer.get_node("Player").get_node("RemoteTransform2D").remote_path = NodePath("")
+		#Global.controlled_entity = player_inst
+		#player_inst.get_node("RemoteTransform2D").remote_path = $Camera2D.get_path()
+		#$NeuralLayer.get_node("Player").get_node("RemoteTransform2D").remote_path = NodePath("")
 	else:
 		Global.change_game_state_to(Global.GameState.NEURAL_LAYER)
 		$NeuralLayer.visible = true
-		var neural_player = get_node("NeuralLayer/Player")
-		Global.controlled_entity = neural_player
-		neural_player.get_node("RemoteTransform2D").remote_path = $Camera2D.get_path()
-		player_inst.get_node("RemoteTransform2D").remote_path = NodePath("")
+		#var neural_player = get_node("NeuralLayer/Player")
+		#Global.controlled_entity = neural_player
+		#neural_player.get_node("RemoteTransform2D").remote_path = $Camera2D.get_path()
+		#player_inst.get_node("RemoteTransform2D").remote_path = NodePath("")
 
 func continue_game():
 	Global.change_game_state_back()
@@ -244,14 +243,19 @@ func show_message_box(text, duration, fadding_out_duration):
 	message_box_inst.anchor_bottom = 0.5
 	$CanvasLayer/Control.add_child(message_box_inst)
 	var displayed_size = message_box_inst.size * message_box_inst.scale
-	print(displayed_size)
 	message_box_inst.offset_left = -displayed_size.x / 2
 	message_box_inst.offset_right = displayed_size.x / 2
 	message_box_inst.offset_top = -1.7*displayed_size.y
 	#message_box_inst.offset_bottom = displayed_size.y / 2
 
-func generate_npc(npc_global_position):
-	npcs[npc_global_position] = npc_scene.instantiate()
+func generate_npc(npc_tile_position):
+	var npc: NPC = npc_scene.instantiate()
+	npc.global_position = TilesInterface.tileCoords_to_trueCoords(npc_tile_position)
+	npcs.append(npc)
+	
+func remove_npc(npc: NPC):
+	npcs.erase(npc)
+	npc.queue_free()
 
 # ---------------------------------------------------------------
 # Helper functions

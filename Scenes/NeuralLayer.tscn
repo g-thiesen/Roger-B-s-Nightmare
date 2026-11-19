@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bi14px30b88vf" path="res://Scripts/neural_layer.gd" id="1_tce73"]
 [ext_resource type="TileSet" uid="uid://qsjfo38ootth" path="res://assets/Tilesets/tileset.tres" id="2_3p8on"]
-[ext_resource type="PackedScene" uid="uid://cvgs4nt686327" path="res://Scenes/Player.tscn" id="3_m320t"]
 [ext_resource type="Texture2D" uid="uid://ga8hgq8gl1c0" path="res://assets/UI/UI_CBM_Anatomy.png" id="3_qcva1"]
 [ext_resource type="Texture2D" uid="uid://croxwrfcn7kbd" path="res://assets/UI/UI_Equip_Anatomy.png" id="4_tebkf"]
 
@@ -20,5 +19,3 @@ texture = ExtResource("3_qcva1")
 [node name="Inventory Sprite" type="Sprite2D" parent="." unique_id=1596579412]
 position = Vector2(765, 171)
 texture = ExtResource("4_tebkf")
-
-[node name="Player" parent="." unique_id=64357385 instance=ExtResource("3_m320t")]

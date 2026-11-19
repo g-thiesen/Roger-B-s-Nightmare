@@ -1,4 +1,7 @@
+class_name NPC
 extends Node2D
+
+signal remove_npc_signal
 
 var atlas_regions: Array[Rect2] = [
 	Rect2(64.0, 0.0, 32.0, 48.0),
@@ -24,10 +27,11 @@ var move_array: Array[Vector2] = [
 ]
 
 var move_weights: Array = [1, 1, 1, 1, 1, 1, 1]
-	
+
 var rng := RandomNumberGenerator.new()
 
 @export var data_inventory = DataInventory.new(15)
+@export var character_stats = CharacterStats.new(10, 2)
 
 var speed: int = 2
 var move_speed_weights: Array = [50, speed]
@@ -63,3 +67,6 @@ func get_player_direction() -> Vector2:
 	else:
 		move_dir = Vector2(0, direction.y / abs(direction.y))
 	return move_dir
+	
+func remove():
+	GameEventController.remove_npc(self)

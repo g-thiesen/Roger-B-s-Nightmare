@@ -12,6 +12,7 @@ signal close_equip_interface_triggered
 signal close_stats_interface_triggered
 signal close_cbm_interface_triggered
 signal toggle_neural_layer_triggered
+signal slab_victim_triggered
 
 var input_actions := {}
 
@@ -28,7 +29,8 @@ func _ready() -> void:
 		[KEY_C, true]: c_shift_pressed,
 		[KEY_P, false]: p_pressed,
 		[KEY_ESCAPE, false]: esc_pressed,
-		[KEY_N, false]: n_pressed
+		[KEY_N, false]: n_pressed,
+		[KEY_H, false]: h_pressed
 	}
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -124,6 +126,7 @@ func c_shift_pressed():
 			toggle_character_menu_triggered.emit()
 			
 func p_pressed():
+	print("p_pressed!")
 	match Global.get_game_state():
 		Global.GameState.LOCAL:
 			pickpocket_victim_triggered.emit()
@@ -147,3 +150,8 @@ func n_pressed():
 			toggle_neural_layer_triggered.emit()
 		Global.GameState.NEURAL_LAYER:
 			toggle_neural_layer_triggered.emit()
+
+func h_pressed():
+	match Global.get_game_state():
+		Global.GameState.LOCAL:
+			slab_victim_triggered.emit()
