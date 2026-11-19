@@ -1,6 +1,7 @@
 extends StaticBody2D
 
 @onready var message_box_scene = preload("res://Scenes/MessageBox.tscn")
+@onready var damage_numbers_scene = preload("res://Scenes/Animations/DamageNumber.tscn")
 
 # Extensions
 var data_inventory: DataInventory = DataInventory.new(5)
@@ -45,8 +46,11 @@ func pickpocket_target():
 func slab_target():
 	var collision_ray = $MoveOperator.get_node("ShapeCast2D")
 	if collision_ray.is_colliding():
+		var damage_number_animation = damage_numbers_scene.instantiate()
 		var target = collision_ray.get_collider(0)
 		var delivered_damage = character_actions.slab(self, target)
-		GameEventController.show_message_box("You delivered {amount} damage!".format({"amount": delivered_damage}), 3, 2)
+		add_child(damage_number_animation)
+		damage_number_animation.create(Vector2i(target.global_position.x + TilesInterface.TILE_SIZE*0.5, target.global_position.y - TilesInterface.TILE_SIZE))
+		#GameEventController.show_message_box("You delivered {amount} damage!".format({"amount": delivered_damage}), 3, 2)
 	else:
 		print("No victim in sight")

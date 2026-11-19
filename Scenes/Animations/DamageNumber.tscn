@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://btht565mgfiii"]
+
+[ext_resource type="Script" uid="uid://buic1epfyk417" path="res://Scripts/Animations/damage_numbers.gd" id="1_6lc3y"]
+[ext_resource type="Texture2D" uid="uid://ihpx2se5xnxg" path="res://assets/damage_numbers/Damage_Numbers.png" id="2_8eicc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0aft1"]
+atlas = ExtResource("2_8eicc")
+region = Rect2(0, 0, 32, 32)
+
+[node name="DamageNumber" type="Node2D" unique_id=1369346113]
+script = ExtResource("1_6lc3y")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=483792516]
+position = Vector2(16, -16)
+texture = SubResource("AtlasTexture_0aft1")
